@@ -1,6 +1,7 @@
 #include <iostream>
 #include <math.h>
 
+//task 1:
 struct Product 
 {
 	char description[32];
@@ -8,6 +9,7 @@ struct Product
 	int productNumber;
 };
 
+//task 2:
 struct Triangle
 {
 	double a;
@@ -16,7 +18,7 @@ struct Triangle
 	void createTr();
 	void printTr();
 	double perim();
-	double faceTr();
+	double areaTr();
 };
 
 void Triangle::createTr()
@@ -38,7 +40,7 @@ double Triangle::perim()
 	return (a + b + c);
 }
 
-double Triangle::faceTr()
+double Triangle::areaTr()
 {
 	double p = perim() / 2;
 	return sqrt(p*(p - a)*(p - b)*(p - c));
@@ -56,20 +58,78 @@ void createTriangle(Triangle& t)
 	t.c = z;
 }
 
-void printTriangle(Triangle& t)
+void printTriangle(const Triangle& t)
 {
 	std::cout << t.a << " " << t.b << " " << t.c << std::endl;
 }
 
-double P(Triangle& t)
+double P(const Triangle& t)
 {
 	return (t.a + t.b + t.c);
 }
 
-double S(Triangle& t)
+double S(const Triangle& t)
 {
 	double perim = P(t) / 2;
 	return sqrt(perim*(perim - t.a)*(perim - t.b)*(perim - t.c));
+}
+
+//task 3:
+struct Point
+{
+	double x;
+	double y;
+};
+
+void createPoint(Point& p)
+{
+	std::cout << "Enter coordinates of a point: " << std::endl;
+	std::cin >> p.x >> p.y;
+}
+
+void printPoint(const Point& p)
+{
+	std::cout <<"x: " << p.x << " " << "y: " << p.y << std::endl;
+}
+
+double distanceBetweenPoints(const Point& a,const Point& b)
+{
+	return sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y));
+}
+
+struct Triangle2
+{
+	Point a;
+	Point b;
+	Point c;
+};
+
+void createTriangle2(Triangle2& t)
+{
+	createPoint(t.a);
+	createPoint(t.b);
+	createPoint(t.c);
+}
+
+void printTriangle2(const Triangle2& t)
+{
+	printPoint(t.a);
+	printPoint(t.b);
+	printPoint(t.c);
+}
+
+double perimTrian2(const Triangle2& t)
+{
+	return distanceBetweenPoints(t.a, t.b) + distanceBetweenPoints(t.a, t.c) + distanceBetweenPoints(t.b, t.c);
+}
+
+double areaTrian2(const Triangle2& t)
+{
+	double a = distanceBetweenPoints(t.a, t.b);
+	double b = distanceBetweenPoints(t.b, t.c);
+	double c = distanceBetweenPoints(t.a, t.c);
+	double p = perimTrian2(t) / 2;
+	return sqrt(p*(p - a)*(p - b)*(p - c));
 }
 
 int main()
@@ -102,7 +162,7 @@ int main()
 	/*Triangle t;
 	t.createTr();
 	t.printTr();
-	std::cout << t.perim() << " " << t.faceTr() << std::endl;*/
+	std::cout << t.perim() << " " << t.areaTr() << std::endl;*/
 
 	//task 2, var3:
 	/*Triangle t;
@@ -110,7 +170,13 @@ int main()
 	ptrT->createTr();                                      //(*ptrT).createTr();
 	ptrT->printTr();                                       //(*ptrT).printTr(); 
 	std::cout << ptrT->perim() << std::endl;
-	std::cout << ptrT->faceTr() << std::endl;*/
+	std::cout << ptrT->areaTr() << std::endl;*/
+
+	//task 3:
+	/*Triangle2 t;
+	createTriangle2(t);
+	printTriangle2(t);
+	std::cout << perimTrian2(t) << " " << areaTrian2(t) << std::endl;*/
 
 	return 0;
 }
