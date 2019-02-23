@@ -92,14 +92,14 @@ int main()
 	printArrDest(arr, 5);*/
 
 	//task 2 and 3
-	Student arr[SIZE_ARR];
+	/*Student arr[SIZE_ARR];
 	unsigned int n;
 	std::cout << "Enter n: " << std::endl;
 	std::cin >> n;
 	std::cin.ignore();
 	arrStudent(arr, n);
 	sortStudents(arr, n);
-	printArrStudents(arr, n);
+	printArrStudents(arr, n);*/
 
 	return 0;
 }
