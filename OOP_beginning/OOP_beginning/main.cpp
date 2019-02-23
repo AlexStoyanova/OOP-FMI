@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <math.h>
 
 //task 1:
@@ -132,9 +133,59 @@ double areaTrian2(const Triangle2& t)
 	return sqrt(p*(p - a)*(p - b)*(p - c));
 }
 
+//task 4
+void createArrPoints(Point* arr, size_t size)
+{
+	for (size_t i = 0; i < size; ++i)
+	{
+		createPoint(arr[i]);
+	}
+}
+
+double biggestDistance(const Point* arr, size_t size)
+{
+	double res = 0;
+	for (size_t i = 0; i < size; ++i)
+	{
+		for (size_t j = i + 1; j < size; ++j)
+		{
+			if (distanceBetweenPoints(arr[i], arr[j]) > res)
+			{
+				res = distanceBetweenPoints(arr[i], arr[j]);
+			}
+		}
+	}
+	return res;
+}
+
+//task 5
+void sortingArrPoints(Point* arr, size_t size)
+{
+	for (size_t i = 0; i < size; ++i)
+	{
+		for (size_t j = i + 1; j < size; ++j)
+		{
+			if ((arr[i].x < arr[j].x) || (arr[i].x == arr[j].x && arr[i].y < arr[j].y))
+			{
+				std::swap(arr[i], arr[j]);
+			}
+		}
+	}
+}
+
+void printArrayPoints(const Point* arr, size_t size)
+{
+	for (size_t i = 0; i < size; ++i)
+	{
+		std::cout << arr[i].x << " " << arr[i].y << std::endl;
+	}
+}
+
+
 int main()
 {
 	//task 1:
+
 	/*Product p1 = { "Screw-driver" };
 	Product p2 = { "Hammer" };
 	p1.cost = 5.5;
@@ -153,18 +204,21 @@ int main()
 	}*/
 
 	//task 2, var1:
+
 	/*Triangle t;
 	createTriangle(t);
 	printTriangle(t);
 	std::cout << P(t) << ' ' << S(t) << std::endl;*/
 	
 	//task 2, var2:
+
 	/*Triangle t;
 	t.createTr();
 	t.printTr();
 	std::cout << t.perim() << " " << t.areaTr() << std::endl;*/
 
 	//task 2, var3:
+
 	/*Triangle t;
 	Triangle *ptrT = &t;
 	ptrT->createTr();                                      //(*ptrT).createTr();
@@ -173,10 +227,31 @@ int main()
 	std::cout << ptrT->areaTr() << std::endl;*/
 
 	//task 3:
+
 	/*Triangle2 t;
 	createTriangle2(t);
 	printTriangle2(t);
 	std::cout << perimTrian2(t) << " " << areaTrian2(t) << std::endl;*/
 
+	//task 4
+
+	/*const int SIZE = 100;
+	int n;
+	std::cout << "Enter n: " << std::endl;
+	std::cin >> n;
+	Point arr[SIZE];
+	createArrPoints(arr, n);
+	std::cout << biggestDistance(arr, n) << std::endl;*/
+
+	//task 5
+	/*const int SIZE = 100;
+	int n;
+	Point arr[SIZE];
+	std::cout << "Enter n: " << std::endl;
+	std::cin >> n;
+	createArrPoints(arr, n);
+	sortingArrPoints(arr, n);
+	printArrayPoints(arr, n);*/
+	
 	return 0;
 }
