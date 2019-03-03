@@ -57,15 +57,20 @@ void arrStudent(Student* arr, size_t n)
 
 void sortStudents(Student* arr, size_t n)
 {
-	for (size_t i = 1; i < n; ++i)
+	int minFn;
+	for (size_t i = 0; i < n - 1; ++i)
 	{
-		for (int j = i; j > 0; --j)
+		minFn = i;
+		for (int j = i + 1; j < n; ++j)
 		{
-			if (arr[j].fn < arr[j - 1].fn)
+			if (arr[minFn].fn > arr[j].fn)
 			{
-				std::swap(arr[j].fn, arr[j - 1].fn);
-				std::swap(arr[j].name, arr[j - 1].name);
+				minFn = j;
 			}
+		}
+		if (minFn != i)
+		{
+			std::swap(arr[i], arr[minFn]);
 		}
 	}
 }
@@ -92,14 +97,14 @@ int main()
 	printArrDest(arr, 5);*/
 
 	//task 2 and 3
-	/*Student arr[SIZE_ARR];
+	Student arr[SIZE_ARR];
 	unsigned int n;
 	std::cout << "Enter n: " << std::endl;
 	std::cin >> n;
 	std::cin.ignore();
 	arrStudent(arr, n);
 	sortStudents(arr, n);
-	printArrStudents(arr, n);*/
+	printArrStudents(arr, n);
 
 	return 0;
 }
