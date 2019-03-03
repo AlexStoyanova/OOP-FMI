@@ -13,13 +13,15 @@ struct Product
 //task 2:
 struct Triangle
 {
+	Triangle* tr;
 	double a;
 	double b;
 	double c;
 	void createTr();
 	void printTr();
-	double perim();
+	double perim() const;
 	double areaTr();
+	void test(const Triangle& t);
 };
 
 void Triangle::createTr()
@@ -36,7 +38,7 @@ void Triangle::printTr()
 	std::cout << a  << " " << b << " " << c << std::endl;
 }
 
-double Triangle::perim()
+double Triangle::perim() const
 {
 	return (a + b + c);
 }
@@ -161,14 +163,20 @@ double biggestDistance(const Point* arr, size_t size)
 //task 5
 void sortingArrPoints(Point* arr, size_t size)
 {
-	for (size_t i = 0; i < size; ++i)
+	int maxPnt;
+	for (size_t i = 0; i < size - 1; ++i)
 	{
+		maxPnt = i;
 		for (size_t j = i + 1; j < size; ++j)
 		{
-			if ((arr[i].x < arr[j].x) || (arr[i].x == arr[j].x && arr[i].y < arr[j].y))
+			if ((arr[maxPnt].x < arr[j].x) || (arr[maxPnt].x == arr[j].x && arr[maxPnt].y < arr[j].y))
 			{
-				std::swap(arr[i], arr[j]);
+				maxPnt = j;
 			}
+		}
+		if (maxPnt != i)
+		{
+			std::swap(arr[i], arr[maxPnt]);
 		}
 	}
 }
@@ -244,14 +252,14 @@ int main()
 	std::cout << biggestDistance(arr, n) << std::endl;*/
 
 	//task 5
-	/*const int SIZE = 100;
+	const int SIZE = 100;
 	int n;
 	Point arr[SIZE];
 	std::cout << "Enter n: " << std::endl;
 	std::cin >> n;
 	createArrPoints(arr, n);
 	sortingArrPoints(arr, n);
-	printArrayPoints(arr, n);*/
+	printArrayPoints(arr, n);
 	
 	return 0;
 }
