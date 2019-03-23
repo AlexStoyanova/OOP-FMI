@@ -1,2 +1,7 @@
 ﻿  main.cpp
+  Patient.cpp
+  Doctor.cpp
+c:\users\alexandra\source\repos\doctor_who\doctor_who\doctor.cpp(8): warning C4018: '<': signed/unsigned mismatch
+c:\users\alexandra\source\repos\doctor_who\doctor_who\doctor.cpp(60): warning C4018: '>': signed/unsigned mismatch
+  Generating Code...
   Doctor_Who.vcxproj -> C:\Users\Alexandra\source\repos\Doctor_Who\Debug\Doctor_Who.exe

@@ -10,8 +10,12 @@ private:
 	char* name;
 	Patient* patients[MAX_SIZE];
 	unsigned int count_patients;
+private:
+	void copy(const Doctor& d);
 public:
 	Doctor(const char* name);
+	Doctor(const Doctor&);
+	Doctor& operator=(const Doctor&);
 	~Doctor();
 	void newPatient(Patient &p);
 	double average();
