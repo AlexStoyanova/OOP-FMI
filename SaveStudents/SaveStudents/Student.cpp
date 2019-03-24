@@ -60,13 +60,14 @@ void sequentialSearch()
 	std::ifstream ifs(fileName, std::ios::binary);
 	if (ifs.is_open())
 	{
-		while (!ifs.eof() && flag)
+		while (!ifs.eof())
 		{
 			ifs.read((char*)&st, sizeof(st));
 			if (st.FN == new_fn)
 			{
 				flag = false;
 				std::cout << st.FN << " " << st.FirstName << " " << st.LastName << " " << st.Grade << std::endl;
+				break;
 			}
 		}
 		if (flag)
