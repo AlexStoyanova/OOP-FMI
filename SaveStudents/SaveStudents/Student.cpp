@@ -2,11 +2,33 @@
 
 const char* fileName = "StudentsGrades.db";
 
+bool isExists(unsigned long long int new_fn)
+{
+	Student check;
+	std::ifstream ifs(fileName, std::ios::binary);
+	if (ifs.is_open())
+	{
+		while (!ifs.eof())
+		{
+			ifs.read((char*)&check, sizeof(Student));
+			if (check.FN == new_fn)
+			{
+				return true;
+			}
+		}
+	}
+	ifs.close();
+	return false;
+}
+
 void create()
 {
 	Student st;
-	std::cout << "Enter fn: " << std::endl;
-	std::cin >> st.FN;
+	do
+	{
+		std::cout << "Enter fn: " << std::endl;
+		std::cin >> st.FN;
+	} while (isExists(st.FN));
 	std::cin.ignore();
 	std::cout << "Enter first name: " << std::endl;
 	std::cin.getline(st.FirstName, MAX_NAME_SIZE);
