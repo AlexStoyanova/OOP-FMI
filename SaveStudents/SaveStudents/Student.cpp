@@ -5,6 +5,7 @@ const char* fileName = "StudentsGrades.db";
 bool isExists(unsigned long long int new_fn)
 {
 	Student check;
+	bool flag = false;
 	std::ifstream ifs(fileName, std::ios::binary);
 	if (ifs.is_open())
 	{
@@ -13,12 +14,13 @@ bool isExists(unsigned long long int new_fn)
 			ifs.read((char*)&check, sizeof(Student));
 			if (check.FN == new_fn)
 			{
-				return true;
+				flag = true;
+				break;
 			}
 		}
 	}
 	ifs.close();
-	return false;
+	return flag;
 }
 
 void create()
@@ -52,22 +54,22 @@ void sequentialSearch()
 {
 	Student st;
 	unsigned long long int new_fn;
-	bool hasThisStudent = false;
+	bool flag = true;
 	std::cout << "Enter faculty number of a student which you what to see: " << std::endl;
 	std::cin >> new_fn;
 	std::ifstream ifs(fileName, std::ios::binary);
 	if (ifs.is_open())
 	{
-		while (!ifs.eof())
+		while (!ifs.eof() && flag)
 		{
 			ifs.read((char*)&st, sizeof(st));
 			if (st.FN == new_fn)
 			{
-				hasThisStudent = true;
+				flag = false;
 				std::cout << st.FN << " " << st.FirstName << " " << st.LastName << " " << st.Grade << std::endl;
 			}
 		}
-		if (!hasThisStudent)
+		if (flag)
 		{
 			std::cout << "Record not found!" << std::endl;
 		}
