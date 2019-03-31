@@ -12,7 +12,7 @@ struct Car
 	double price;
 };
 
-int main()
+void input()
 {
 	unsigned int n;
 	std::cout << "How much cars you will enter: " << std::endl;
@@ -42,7 +42,11 @@ int main()
 
 	}
 	ofsBin.close();
+	delete[] cars;
+}
 
+size_t writeInTxt()
+{
 	Car helper;
 	unsigned int counter = 0;
 	std::ifstream ifsBin(fileNameBin, std::ios::binary);
@@ -63,7 +67,11 @@ int main()
 	}
 	ofsTxt.close();
 	ifsBin.close();
+	return counter;
+}
 
+Car* writeFromTxtInStruct(size_t counter)
+{
 	Car* newCars = new(std::nothrow) Car[counter];
 
 	std::ifstream ifsTxt(fileNameTxt);
@@ -82,7 +90,11 @@ int main()
 		}
 	}
 	ifsTxt.close();
+	return newCars;
+}
 
+void sorting(Car* newCars, size_t counter)
+{
 	int minIndex;
 	for (size_t i = 0; i < counter - 1; ++i)
 	{
@@ -99,14 +111,26 @@ int main()
 			std::swap(newCars[i], newCars[minIndex]);
 		}
 	}
+}
 
+void printModel(Car* newCars, size_t counter)
+{
 	for (size_t i = 0; i < counter; ++i)
 	{
 		std::cout << newCars[i].model << std::endl;
 	}
+}
 
+int main()
+{
+
+	input();
+	unsigned int counter;
+	counter = writeInTxt();
+	Car* newCars = writeFromTxtInStruct(counter);
+	sorting(newCars, counter);
+	printModel(newCars, counter);
 	delete[] newCars;
-	delete[] cars;
-
+	
 	return 0;
 }
