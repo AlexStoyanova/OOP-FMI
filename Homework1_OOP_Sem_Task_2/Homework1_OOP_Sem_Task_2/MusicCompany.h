@@ -11,6 +11,7 @@ class MusicCompany
 {
 private:
 	char name[MAX_SIZE];
+	double income;
 	Director director;
 	Studio studio;
 private:
@@ -21,12 +22,12 @@ public:
 	MusicCompany& operator=(const MusicCompany& rhs);
 
 	void changePriceForStudio(double price);
-	void rentStudio(size_t hours, double price);
+	void rentStudio(size_t hours);
 	void checkIncome();
 	double checkIncomeForEuroOrDollars(char* currency);
 	double getStudioPrice() const;
 	size_t getStudioHours() const;
-	void decreaseStudioPriceForAnHour(size_t percent);
+	void decreaseStudioPriceForAnHour(double percent);
 	size_t getDirectorAge() const;
 	const char* getDirectorName() const;
 	const char* getName() const;

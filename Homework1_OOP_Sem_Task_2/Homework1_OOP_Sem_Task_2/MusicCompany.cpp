@@ -5,9 +5,10 @@ void MusicCompany::copy(const MusicCompany & other)
 	strcpy_s(name, MAX_SIZE, other.name);
 	director = other.director;
 	studio = other.studio;
+	income = other.income;
 }
 
-MusicCompany::MusicCompany(char * newName, Director newDirector, Studio newStudio)
+MusicCompany::MusicCompany(char * newName, Director newDirector, Studio newStudio):income(0)
 {
 	strcpy_s(name, MAX_SIZE, newName);
 	director = newDirector;
@@ -33,20 +34,21 @@ void MusicCompany::changePriceForStudio(double price)
 	studio.setPrice(price);
 }
 
-void MusicCompany::rentStudio(size_t hours, double price)
+void MusicCompany::rentStudio(size_t hours)
 {
-	studio.setHours(hours);
-	studio.setPrice(price);
+	if (studio.setHours(hours))
+	{
+		income += hours*studio.getPrice();
+	}
 }
 
 void MusicCompany::checkIncome()
 {
-	std::cout << "Studio income is " << studio.getIncome() << std::endl;
+	std::cout << "Studio income is " << income << std::endl;
 }
 
 double MusicCompany::checkIncomeForEuroOrDollars(char* currency)
 {
-	double income = studio.getIncome();
 	if (strcmp(currency, "euro") == 0)
 	{
 		return income / 1.95;
@@ -72,7 +74,7 @@ size_t MusicCompany::getStudioHours() const
 	return studio.getHours();
 }
 
-void MusicCompany::decreaseStudioPriceForAnHour(size_t percent)
+void MusicCompany::decreaseStudioPriceForAnHour(double percent)
 {
 	studio.decreasePrice(percent);
 }
