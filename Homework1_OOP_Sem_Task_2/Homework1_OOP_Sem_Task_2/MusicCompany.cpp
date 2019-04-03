@@ -51,9 +51,14 @@ double MusicCompany::checkIncomeForEuroOrDollars(char* currency)
 	{
 		return income / 1.95;
 	}
-	if (strcmp(currency, "dollar") == 0)
+	else if (strcmp(currency, "dollar") == 0)
 	{
 		return income / 1.75;
+	}
+	else
+	{
+		std::cout << "Not valid valute!!!" << std::endl;
+		return 0;
 	}
 }
 

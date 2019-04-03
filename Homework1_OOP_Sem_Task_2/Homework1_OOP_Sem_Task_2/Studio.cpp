@@ -1,16 +1,12 @@
 #include "Studio.h"
 
-void Studio::copy(const Studio & other)
+Studio::Studio():hours(0), price(0), income(0)
 {
-	hours = other.hours;
-	price = other.price;
-	income = other.income;
+	max_hours = MAX_HOURS_PER_DAY;
+	min_price = MIN_PRICE_FOR_HOUR;
 }
 
-Studio::Studio():hours(0), price(0), income(0)
-{}
-
-/*Studio::Studio(size_t newHours, double newPrice)
+Studio::Studio(size_t newHours, double newPrice)                         
 {
 	if (newHours <= MAX_HOURS_PER_DAY && newPrice >= MIN_PRICE_FOR_HOUR)
 	{
@@ -25,38 +21,25 @@ Studio::Studio():hours(0), price(0), income(0)
 		hours = 0;
 		price = income = 0;
 	}
-}*/
-
-Studio::Studio(const Studio & other)
-{
-	copy(other);
-}
-
-Studio & Studio::operator=(const Studio & rhs)
-{
-	if (this != &rhs)
-	{
-		copy(rhs);
-	}
-	return *this;
 }
 
 void Studio::setHours(size_t newHours)
 {
-	if (newHours <= MAX_HOURS_PER_DAY)
+	if (newHours <= max_hours)
 	{
 		hours = newHours;
+		max_hours -= newHours;
 	}
 	else
 	{
-		std::cout << "Max hours per day are 8!!!" << std::endl;
+		std::cout << "You can rent studio for maximum: " << max_hours << std::endl;
 	}
 
 }
 
 void Studio::setPrice(double newPrice)
 {
-	if (newPrice >= MIN_PRICE_FOR_HOUR)
+	if (newPrice >= min_price)
 	{
 		price = newPrice;
 		income = price*hours;
@@ -85,7 +68,7 @@ size_t Studio::getHours() const
 void Studio::decreasePrice(size_t percent)
 {
 	double temp = (double)price - price*((double)percent / 100.0);
-	if (temp >= MIN_PRICE_FOR_HOUR)
+	if (temp >= min_price)
 	{
 		price = temp;
 		income = hours*price;

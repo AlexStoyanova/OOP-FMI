@@ -4,6 +4,7 @@
 #include <string.h>
 #include "Director.h"
 #include "Studio.h"
+
 #define MAX_SIZE 64
 
 class MusicCompany

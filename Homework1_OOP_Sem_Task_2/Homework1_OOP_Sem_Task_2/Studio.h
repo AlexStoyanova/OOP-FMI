@@ -12,13 +12,11 @@ private:
 	unsigned int hours;
 	double price;
 	double income;
-private:
-	void copy(const Studio& other);
+	unsigned int max_hours;
+	double min_price;
 public:
 	Studio();
-//	Studio(size_t newHours, double newPrice);
-	Studio(const Studio& other);
-	Studio& operator=(const Studio& rhs);
+	Studio(size_t newHours, double newPrice);
 
 	void setHours(size_t newHours);
 	void setPrice(double newPrice);
