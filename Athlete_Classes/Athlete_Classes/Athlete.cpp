@@ -75,7 +75,7 @@ void Athlete::writeInBinFileAthlete(std::ofstream & ofs)
 {
 	size_t len = strlen(name);
 	ofs.write((const char*)&len, sizeof(size_t));
-	ofs.write((const char*)&name, sizeof(len));
+	ofs.write(name, len*sizeof(char));
 	ofs.write((const char*)&height, sizeof(unsigned int));
 }
 
@@ -84,7 +84,7 @@ void Athlete::readFromBinFileAthlete(std::ifstream & ifs)
 	size_t len = 0;
 	ifs.read((char*)&len, sizeof(size_t));
 	name = new (std::nothrow) char[len + 1];
-	ifs.read((char*)&name, sizeof(len));
+	ifs.read(name, len*sizeof(char));
 	ifs.read((char*)&height, sizeof(unsigned int));
 }
 

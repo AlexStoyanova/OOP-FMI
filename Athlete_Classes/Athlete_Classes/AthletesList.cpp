@@ -68,8 +68,8 @@ AthletesList::AthletesList(const char * fileBinName)
 	ifsBin.close();
 }
 
-/*
-AthletesList::AthletesList(const char * fileName)
+
+/*AthletesList::AthletesList(const char * fileName)
 {
 	size = 0;
 	std::ifstream ifsTxt(fileName);
@@ -131,16 +131,11 @@ bool AthletesList::addAthlete(const Athlete & ath)
 	if (size >= capacity)
 	{
 		resize();
-		list[size] = ath;
-		size++;
-		return true;
 	}
-	else
-	{
-		list[size] = ath;
-		size++;
-		return true;
-	}
+	list[size] = ath;
+	size++;
+	return true;
+
 }
 
 void AthletesList::print() const
@@ -153,7 +148,7 @@ void AthletesList::print() const
 
 void AthletesList::writeInBinFile(const char * fileBinName)
 {
-	std::ofstream ofsBin(fileBinName, std::ios::binary);
+	std::ofstream ofsBin(fileBinName, std::ios::binary|std::ios::trunc);
 	if (ofsBin.is_open())
 	{
 		ofsBin.write((const char*)&size, sizeof(size_t));

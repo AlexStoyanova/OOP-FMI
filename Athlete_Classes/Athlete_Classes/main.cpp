@@ -7,7 +7,7 @@ void test()
 {
 	AthletesList at("athleteBin.bin");
 	at.print();
-//	at.writeInBinFile("athleteBin.bin");
+	//at.writeInBinFile("athleteBin.bin");
 }
 
 int main()
