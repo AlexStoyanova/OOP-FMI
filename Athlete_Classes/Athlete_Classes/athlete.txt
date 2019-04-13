@@ -1,0 +1,5 @@
+5 10 Alexandra 162
+3 Ivo 184
+4 Ivan 190
+6 Georgi 180
+5 Pesho 170
