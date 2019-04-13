@@ -34,40 +34,31 @@ AthletesList::AthletesList() : size(0), capacity(MAX_SIZE)
 	list = new (std::nothrow) Athlete[MAX_SIZE];
 }
 
-AthletesList::AthletesList(const Athlete * newList, unsigned int newCapacity) : size(0), capacity(newCapacity)
+AthletesList::AthletesList(unsigned int newCapacity) : size(0), capacity(newCapacity)
 {
 	list = new (std::nothrow) Athlete[capacity];
 }
 
 
-AthletesList::AthletesList(const char * fileBinName)
+AthletesList::AthletesList(const char * fileBinName):size(0)
 {
-	size = 0;
 	std::ifstream ifsBin(fileBinName, std::ios::binary);
 	if (ifsBin.is_open())
 	{
-		//char* buff;
-		//size_t lenAth = 0;
-		//size_t tempHeight = 0;
-		ifsBin.read((char*)&capacity, sizeof(unsigned int));
+		ifsBin.read((char*)&capacity, sizeof(capacity));
 		list = new (std::nothrow) Athlete[capacity];
 		while (!ifsBin.eof())
 		{
 			list[size].readFromBinFileAthlete(ifsBin);
+			if (ifsBin.eof())
+			{
+				break;
+			}
 			size++;
-			/*ifsBin.read((char*)&lenAth, sizeof(size_t));
-			buff = new (std::nothrow) char[lenAth + 1];
-			ifsBin.read((char*)&buff, sizeof(lenAth));
-			ifsBin.read((char*)&tempHeight, sizeof(size_t));
-			list[size].setName(buff);
-			list[size].setHeight(tempHeight);
-			size++;
-			delete[] buff;*/
 		}
 	}
 	ifsBin.close();
 }
-
 
 /*AthletesList::AthletesList(const char * fileName)
 {
@@ -75,29 +66,33 @@ AthletesList::AthletesList(const char * fileBinName)
 	std::ifstream ifsTxt(fileName);
 	if (ifsTxt.is_open())
 	{
-		char* buff;
-		size_t lenAth = 0;
+		char name[1024];
 		size_t tempHeight = 0;
-
-		ifsTxt >> capacity;
-		list = new (std::nothrow) Athlete[capacity];
-
+		int count = 0;
 		while (!ifsTxt.eof())
 		{
-			ifsTxt >> lenAth;
-			buff = new (std::nothrow) char[lenAth + 1];
-			ifsTxt >> buff;
-			list[size].setName(buff);
-			ifsTxt >> tempHeight;
+			ifsTxt >> name >> tempHeight;
+			if (strcmp(name, "") == 0)
+			{
+				break;
+			}
+			count++;
+		}
+		capacity = count;
+		list = new (std::nothrow) Athlete[capacity];
+		ifsTxt.seekg(0, std::ios::beg);
+		while (!ifsTxt.eof())
+		{
+			ifsTxt >> name >> tempHeight;
+			list[size].setName(name);
 			list[size].setHeight(tempHeight);
 			size++;
-			delete[] buff;
 		}
 
 	}
 	ifsTxt.close();
-}*/
-
+}
+*/
 AthletesList::AthletesList(const AthletesList & other)
 {
 	copyList(other);
@@ -146,12 +141,61 @@ void AthletesList::print() const
 	}
 }
 
+bool AthletesList::checkAthlete(const Athlete & ath) const
+{
+	for (size_t i = 0; i < size; ++i)
+	{
+		if (list[i] == ath)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
+
+void AthletesList::printInFile(const char * fileName)
+{
+	std::ofstream ofsTxt(fileName);
+	if (ofsTxt.is_open())
+	{
+		sortingByHeight();
+		ofsTxt << size << " ";
+		for (size_t i = 0; i < size; ++i)
+		{
+			ofsTxt << list[i].getName() << " " << list[i].getHeight() << std::endl;
+		}
+	}
+	ofsTxt.close();
+}
+
+void AthletesList::sortingByHeight()
+{
+	int min = 0;
+	for (size_t i = 0; i < size - 1; ++i)
+	{
+		min = i;
+		for (size_t j = i + 1; j < size; ++j)
+		{
+			if (list[j].getHeight() < list[min].getHeight())
+			{
+				min = j;
+			}
+		}
+		if (min != i)
+		{
+			std::swap(list[i], list[min]);
+		}
+	}
+}
+
 void AthletesList::writeInBinFile(const char * fileBinName)
 {
 	std::ofstream ofsBin(fileBinName, std::ios::binary|std::ios::trunc);
 	if (ofsBin.is_open())
 	{
-		ofsBin.write((const char*)&size, sizeof(size_t));
+		ofsBin.write((const char*)&size, sizeof(size));
 		for (size_t i = 0; i < size; ++i)
 		{
 			list[i].writeInBinFileAthlete(ofsBin);

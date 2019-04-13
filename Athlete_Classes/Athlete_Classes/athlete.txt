@@ -1,5 +1,5 @@
-5 10 Alexandra 162
-3 Ivo 184
-4 Ivan 190
-6 Georgi 180
-5 Pesho 170
+Alexandra 162
+Ivo 184
+Ivan 190
+Georgi 180
+Pesho 170

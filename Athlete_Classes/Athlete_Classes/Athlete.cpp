@@ -74,18 +74,20 @@ unsigned int Athlete::getHeight() const
 void Athlete::writeInBinFileAthlete(std::ofstream & ofs)
 {
 	size_t len = strlen(name);
-	ofs.write((const char*)&len, sizeof(size_t));
-	ofs.write(name, len*sizeof(char));
-	ofs.write((const char*)&height, sizeof(unsigned int));
+	ofs.write((const char*)&len, sizeof(len));
+	ofs.write(name, len);
+	ofs.write((const char*)&height, sizeof(height));
 }
 
 void Athlete::readFromBinFileAthlete(std::ifstream & ifs)
 {
 	size_t len = 0;
-	ifs.read((char*)&len, sizeof(size_t));
+	ifs.read((char*)&len, sizeof(len));
+	if (ifs.eof()) { return; }
 	name = new (std::nothrow) char[len + 1];
-	ifs.read(name, len*sizeof(char));
-	ifs.read((char*)&height, sizeof(unsigned int));
+	ifs.read(name, len);
+	name[len] = '\0';
+	ifs.read((char*)&height, sizeof(height));
 }
 
 

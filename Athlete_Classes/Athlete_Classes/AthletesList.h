@@ -19,9 +19,9 @@ private:
 	void resize();
 public:
 	AthletesList();
-	AthletesList(const Athlete* newList, unsigned int newCapacity);
-	//AthletesList(const char* fileName);
-	AthletesList(const char* fileBinName);
+	AthletesList(unsigned int newCapacity);
+	AthletesList(const char* fileName);
+	//AthletesList(const char* fileBinName);
 	AthletesList(const AthletesList& other);
 	AthletesList& operator =(const AthletesList& rhs);
 	~AthletesList();
@@ -29,6 +29,9 @@ public:
 	bool addAthlete(const Athlete& ath);
 	void print() const;
 	void writeInBinFile(const char* fileBinName);
+	bool checkAthlete(const Athlete& ath) const;
+	void printInFile(const char* fileName);
+	void sortingByHeight();
 };
 
 #endif
