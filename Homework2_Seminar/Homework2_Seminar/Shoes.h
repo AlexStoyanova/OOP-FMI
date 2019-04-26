@@ -5,13 +5,14 @@
 class Shoes : public Item
 {
 private:
-	bool isMeasured;
+	bool isTry;
 public:
 	Shoes();
-	Shoes(bool isMeasured, const char* address, double price, size_t capacityForElem, const Box& itemBox);
+	Shoes(bool isTry, const char* address, double price, size_t capacityForElem, const Box& itemBox);
 
-	virtual double priceForTransport() const;
-	virtual void print() const;
+	double priceForTransport() const;
+	void print() const;
+	virtual Item* clone();
 };
 
 #endif

@@ -11,17 +11,20 @@ private:
 	size_t capacity;
 private:
 	void clearList();
+	void copyCC(const CourierCompany& other);
+	void resize();
 public:
 	CourierCompany(size_t newCapacity);
-	//CourierCompany(const CourierCompany& other);
-	//CourierCompany& operator=(const CourierCompany& rhs);
+	CourierCompany(const CourierCompany& other);
+	CourierCompany& operator=(const CourierCompany& rhs);
 	~CourierCompany();
 
-	bool addShoesInList(Shoes& shoes);
-	bool addFurnitureInList(Furniture& furniture);
+	void addShoesInList(Shoes& shoes);
+	void addFurnitureInList(Furniture& furniture);
 	double income() const;
 	double volume() const;
 	void printCC() const;
+
 };
 
 #endif

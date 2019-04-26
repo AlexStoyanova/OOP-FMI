@@ -2,7 +2,7 @@
 
 void Material::copyFrom(const Material & other)
 {
-	name = new (std::nothrow) char[strlen(other.name) + 1];
+	name = new char[strlen(other.name) + 1];
 	strcpy_s(name, strlen(other.name) + 1, other.name);
 	fragile = other.fragile;
 }
@@ -17,7 +17,7 @@ Material::Material() : name(nullptr), fragile(false)
 
 Material::Material(const char * newName, bool newFragile)
 {
-	name = new (std::nothrow) char[strlen(newName) + 1];
+	name = new char[strlen(newName) + 1];
 	strcpy_s(name, strlen(newName) + 1, newName);
 	fragile = newFragile;
 }

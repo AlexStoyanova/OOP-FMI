@@ -2,7 +2,7 @@
 
 void Furniture::copyFurniture(const Furniture & other)
 {
-	brand = new (std::nothrow) char[strlen(other.brand) + 1];
+	brand = new char[strlen(other.brand) + 1];
 	strcpy_s(brand, strlen(other.brand) + 1, other.brand);
 }
 
@@ -18,7 +18,7 @@ Furniture::Furniture() : brand(nullptr), Item()
 Furniture::Furniture(const char * brand, const char * address, double price, size_t capacityForElem, const Box & itemBox) :
 	Item(address, price, capacityForElem, itemBox)
 {
-	this->brand = new (std::nothrow) char[strlen(brand) + 1];
+	this->brand = new char[strlen(brand) + 1];
 	strcpy_s(this->brand, strlen(brand) + 1, brand);
 }
 
@@ -74,4 +74,9 @@ void Furniture::print() const
 	std::cout << "Furniture: " << std::endl;
 	std::cout << "Brand is " << brand << std::endl;
 	Item::print();
+}
+
+Item * Furniture::clone()
+{
+	return new Furniture(*this);
 }

@@ -8,12 +8,12 @@ void Item::clear()
 
 void Item::copyItem(const Item & other)
 {
-	address = new (std::nothrow) char[strlen(other.address) + 1];
+	address = new char[strlen(other.address) + 1];
 	strcpy_s(address, strlen(other.address) + 1, other.address);
 	price = other.price;
 	numberOfElements = other.numberOfElements;
 	capacity = other.capacity;
-	elements = new (std::nothrow) Element[capacity];
+	elements = new Element[capacity];
 	for (size_t i = 0; i < numberOfElements; ++i)
 	{
 		elements[i] = other.elements[i];
@@ -25,7 +25,7 @@ void Item::resize()
 {
 	Element* buff;
 	buff = elements;
-	elements = new (std::nothrow) Element[capacity * 2];
+	elements = new Element[capacity * 2];
 	for (size_t i = 0; i < numberOfElements; ++i)
 	{
 		elements[i] = buff[i];
@@ -38,12 +38,11 @@ Item::Item() : address(nullptr), price(0), numberOfElements(0), elements(nullptr
 {}
 
 Item::Item(const char* newAddress, double newPrice, size_t newCapacity, const Box& newItemBox) : 
-	price(newPrice), numberOfElements(0), capacity(newCapacity)
+	price(newPrice), numberOfElements(0), capacity(newCapacity), itemBox(newItemBox)
 {
-	address = new (std::nothrow) char[strlen(newAddress) + 1];
+	address = new char[strlen(newAddress) + 1];
 	strcpy_s(address, strlen(newAddress) + 1, newAddress);
-	elements = new (std::nothrow) Element[capacity];
-	itemBox = newItemBox;
+	elements = new Element[capacity];
 }
 
 Item::Item(const Item& other)
@@ -95,13 +94,14 @@ void Item::printElementsOfItem() const
 {
 	for (size_t i = 0; i < numberOfElements; ++i)
 	{
-		std::cout << "Element " << i << ":" << std::endl;
+		std::cout << "Element " << i + 1 << ":" << std::endl;
 		elements[i].printElement();
 	}
 }
 
 void Item::print() const
 {
+	itemBox.printBox();
 	std::cout << "Address: " << address << std::endl;
 	std::cout << "Price is: " << price 
 		      << ", number of elements is: " << numberOfElements 
@@ -142,4 +142,9 @@ bool Item::isFragileElement(size_t index) const
 double Item::boxVol() const
 {
 	return itemBox.Capacity();
+}
+
+Item * Item::clone()
+{
+	return nullptr;
 }

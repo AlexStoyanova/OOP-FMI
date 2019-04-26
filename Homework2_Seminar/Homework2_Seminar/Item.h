@@ -22,7 +22,7 @@ public:
 	Item(const char* newAddress, double newPrice, size_t capacityForElements,const Box& newItemBox);
 	Item(const Item& other);
 	Item& operator=(const Item& rhs);
-	~Item();
+	virtual ~Item();
 
 	void addElement(const Element& newElement);
 	double wholeWeight() const;
@@ -33,6 +33,8 @@ public:
 	size_t getNumberOfElements() const;
 	bool isFragileElement(size_t index) const;
 	double boxVol() const;
+
+	virtual Item* clone();
 };
 
 #endif

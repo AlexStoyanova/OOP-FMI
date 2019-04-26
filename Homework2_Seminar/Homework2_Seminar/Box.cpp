@@ -9,3 +9,8 @@ double Box::Capacity() const
 	return a*b*c;
 }
 
+void Box::printBox() const
+{
+	std::cout << "Box: Length: " << a << " Width: " << b << " Height: " << c << std::endl;
+}
+

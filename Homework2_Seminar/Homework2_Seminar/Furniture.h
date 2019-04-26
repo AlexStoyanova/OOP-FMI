@@ -18,8 +18,9 @@ public:
 
 	double wightFurniture() const;
 	bool isFragileFurniture() const;
-	virtual double priceForTransport() const;
-	virtual void print() const;
+	double priceForTransport() const;
+	void print() const;
+	virtual Item* clone();
 };
 
 #endif

@@ -9,45 +9,73 @@ void CourierCompany::clearList()
 	delete[] itemsList;
 }
 
+void CourierCompany::copyCC(const CourierCompany & other)
+{
+	numberOfItems = other.numberOfItems;
+	capacity = other.capacity;
+	itemsList = new Item*[capacity];
+	for (size_t i = 0; i < numberOfItems; ++i)
+	{
+		itemsList[i] = other.itemsList[i]->clone();
+	}
+}
+
+void CourierCompany::resize()
+{
+	Item** buff;
+	buff = itemsList;
+	itemsList = new Item*[capacity * 2];
+	for (size_t i = 0; i < numberOfItems; ++i)
+	{
+		itemsList[i] = buff[i];
+		buff[i] = nullptr;
+	}
+	delete[] buff;
+	capacity *= 2;
+}
+
 CourierCompany::CourierCompany(size_t newCapacity) : capacity(newCapacity), numberOfItems(0)
 {
 	itemsList = new Item*[capacity];
 }
-/*
+
 CourierCompany::CourierCompany(const CourierCompany & other)
 {
+	copyCC(other);
 }
 
 CourierCompany & CourierCompany::operator=(const CourierCompany & rhs)
 {
-	// TODO: insert return statement here
+	if (this != &rhs)
+	{
+		clearList();
+		copyCC(rhs);
+	}
+	return *this;
 }
-*/
+
 CourierCompany::~CourierCompany()
 {
 	clearList();
 }
 
-bool CourierCompany::addShoesInList(Shoes & shoes)
+void CourierCompany::addShoesInList(Shoes & shoes)
 {
 	if (numberOfItems == capacity)
 	{
-		return false;
+		resize();
 	}
-	itemsList[numberOfItems] = new Shoes(shoes);
-	numberOfItems++;
-	return true;
+	itemsList[numberOfItems++] = new Shoes(shoes);
+	
 }
 
-bool CourierCompany::addFurnitureInList(Furniture & furniture)
+void CourierCompany::addFurnitureInList(Furniture & furniture)
 {
 	if (numberOfItems == capacity)
 	{
-		return false;
+		resize();
 	}
-	itemsList[numberOfItems] = new Furniture(furniture);
-	numberOfItems++;
-	return true;
+	itemsList[numberOfItems++] = new Furniture(furniture);
 }
 
 double CourierCompany::income() const

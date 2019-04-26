@@ -1,5 +1,6 @@
 #ifndef _BOX_H_
 #define _BOX_H_
+#include <iostream>
 
 class Box
 {
@@ -12,6 +13,7 @@ public:
 	Box(double newA, double newB, double newC);
 	
 	double Capacity() const;
+	void printBox() const;
 };
 
 #endif
