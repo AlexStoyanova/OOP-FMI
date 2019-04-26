@@ -75,8 +75,10 @@ void CourierCompany::printCC() const
 	std::cout << "Courier Company: " << std::endl;
 	std::cout << "Number of items are: " << numberOfItems << std::endl;
 	std::cout << "Capacity is: " << capacity << std::endl;
+	std::cout << std::endl;
 	for (size_t i = 0; i < numberOfItems; ++i)
 	{
 		itemsList[i]->print();
+		std::cout << std::endl;
 	}
 }

@@ -10,7 +10,8 @@ private:
 	void copyFurniture(const Furniture& other);
 	void clear();
 public:
-	Furniture(const char* brand, const char* address, double price, size_t capacityForElem, Box& itemBox);
+	Furniture();
+	Furniture(const char* brand, const char* address, double price, size_t capacityForElem,const Box& itemBox);
 	Furniture(const Furniture& other);
 	Furniture& operator=(const Furniture& rhs);
 	~Furniture();

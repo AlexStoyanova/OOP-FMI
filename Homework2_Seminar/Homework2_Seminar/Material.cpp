@@ -44,7 +44,7 @@ Material::~Material()
 
 void Material::printMaterial() const
 {
-	std::cout << "Material is: " << name << ", fragility: ";
+	std::cout << "Material: " << name << ", fragility: ";
 	std::cout << (fragile ? "yes" : "no") << std::endl;
 }
 

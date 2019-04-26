@@ -1,6 +1,9 @@
 #include "Shoes.h"
 
-Shoes::Shoes(bool isMeasured, const char * address, double price, size_t capacityForElem, Box & itemBox):
+Shoes::Shoes() : isMeasured(false), Item()
+{}
+
+Shoes::Shoes(bool isMeasured, const char * address, double price, size_t capacityForElem,const Box & itemBox):
 	Item(address, price, capacityForElem, itemBox),isMeasured(isMeasured)
 {}
 

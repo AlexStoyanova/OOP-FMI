@@ -7,7 +7,8 @@ class Shoes : public Item
 private:
 	bool isMeasured;
 public:
-	Shoes(bool isMeasured, const char* address, double price, size_t capacityForElem, Box& itemBox);
+	Shoes();
+	Shoes(bool isMeasured, const char* address, double price, size_t capacityForElem, const Box& itemBox);
 
 	virtual double priceForTransport() const;
 	virtual void print() const;

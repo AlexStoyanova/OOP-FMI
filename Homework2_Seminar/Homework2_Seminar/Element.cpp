@@ -3,7 +3,7 @@
 Element::Element() : material(), weight(0)
 {}
 
-Element::Element(double newWeight, Material & newMaterial) : material(newMaterial), weight(newWeight) 
+Element::Element(double newWeight,const Material & newMaterial) : material(newMaterial), weight(newWeight) 
 {}
 
 bool Element::isFragile() const
@@ -13,7 +13,6 @@ bool Element::isFragile() const
 
 void Element::printElement() const
 {
-	std::cout << "Element: " << std::endl;
 	material.printMaterial();
 	std::cout << "Weight: " << weight << std::endl;
 }

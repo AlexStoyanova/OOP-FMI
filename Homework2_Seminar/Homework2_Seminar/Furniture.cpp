@@ -11,7 +11,11 @@ void Furniture::clear()
 	delete[] brand;
 }
 
-Furniture::Furniture(const char * brand, const char * address, double price, size_t capacityForElem, Box & itemBox) :
+
+Furniture::Furniture() : brand(nullptr), Item()
+{}
+
+Furniture::Furniture(const char * brand, const char * address, double price, size_t capacityForElem, const Box & itemBox) :
 	Item(address, price, capacityForElem, itemBox)
 {
 	this->brand = new (std::nothrow) char[strlen(brand) + 1];

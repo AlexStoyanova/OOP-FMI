@@ -9,7 +9,7 @@ private:
 	Material material;
 public:
 	Element();
-	Element(double newWeight, Material& newMaterial);
+	Element(double newWeight, const Material& newMaterial);
 	
 	bool isFragile() const;
 	void printElement() const;

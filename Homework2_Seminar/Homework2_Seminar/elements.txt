@@ -1,0 +1,3 @@
+Mladost3 20 2
+100 Glass 1
+45 Stone 0

@@ -19,16 +19,16 @@ private:
 	void resize();
 public:
 	Item();
-	Item(const char* newAddress, double newPrice, size_t capacityForElements, Box& newItemBox);
+	Item(const char* newAddress, double newPrice, size_t capacityForElements,const Box& newItemBox);
 	Item(const Item& other);
 	Item& operator=(const Item& rhs);
 	~Item();
 
 	void addElement(const Element& newElement);
 	double wholeWeight() const;
-	double priceForTransport() const;
+	virtual double priceForTransport() const;
 	void printElementsOfItem() const;
-	void print() const;
+	virtual void print() const;
 	void printInFile(const char* fileName) const;
 	size_t getNumberOfElements() const;
 	bool isFragileElement(size_t index) const;

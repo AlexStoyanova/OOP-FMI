@@ -34,10 +34,10 @@ void Item::resize()
 	delete[] buff;
 }
 
-Item::Item() : address(nullptr), price(0), numberOfElements(0), elements(nullptr), capacity(0)
+Item::Item() : address(nullptr), price(0), numberOfElements(0), elements(nullptr), capacity(0), itemBox()
 {}
 
-Item::Item(const char* newAddress, double newPrice, size_t newCapacity, Box& newItemBox) : 
+Item::Item(const char* newAddress, double newPrice, size_t newCapacity, const Box& newItemBox) : 
 	price(newPrice), numberOfElements(0), capacity(newCapacity)
 {
 	address = new (std::nothrow) char[strlen(newAddress) + 1];
@@ -95,18 +95,17 @@ void Item::printElementsOfItem() const
 {
 	for (size_t i = 0; i < numberOfElements; ++i)
 	{
-		std::cout << "Element " << i << " is: " << std::endl;
+		std::cout << "Element " << i << ":" << std::endl;
 		elements[i].printElement();
 	}
 }
 
 void Item::print() const
 {
-	std::cout << "Address is: " << address << std::endl;
+	std::cout << "Address: " << address << std::endl;
 	std::cout << "Price is: " << price 
 		      << ", number of elements is: " << numberOfElements 
 		      << ", capacity is: " << capacity << std::endl;
-	std::cout << "Elements are: " << std::endl;
 	printElementsOfItem();
 }
 
