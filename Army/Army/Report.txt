@@ -1,0 +1,5 @@
+General of this army is: Alexandra
+Description of this army is: Together we are stronger!
+Money needed for this army is: 10032
+Power of an army is: 348
+Average power of a soldier in army: 23
