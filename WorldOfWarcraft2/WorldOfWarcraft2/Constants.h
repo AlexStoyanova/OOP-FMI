@@ -27,9 +27,13 @@
 #define LEFT_ARROW 75
 #define RIGHT_ARROW 77
 #define DOWN_ARROW 80
+#define ENTER 13
 
 #define AMOUNT_GOBLINS 7
 #define AMOUNT_DRAGONKIN 7
 #define AMOUNT_DEATHKNIGHT 6
+
+#define MAX_OPTIONS_IN_MENU 4
+#define MAX_OPTIONS_IN_HEROES_MENU 3
 
 #endif

@@ -5,12 +5,10 @@ Paladin::Paladin(const char* name) : Hero(name, PALADIN_STRENGTH, PALADIN_INTELL
 
 void Paladin::levelUp()
 {
-	if (killedMonsters == (2 << level))
-	{
-		Hero::levelUp();
-		strength += (PALADIN_STRENGTH / 3.0);
-		intelligence += (PALADIN_INTELLIGENCE / 3.0);
-	}
+
+	Hero::levelUp();
+	strength += (PALADIN_STRENGTH / 3.0);
+	intelligence += (PALADIN_INTELLIGENCE / 3.0);
 }
 
 double Paladin::getAttack()

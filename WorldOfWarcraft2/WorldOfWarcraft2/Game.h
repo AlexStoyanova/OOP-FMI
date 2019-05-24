@@ -28,7 +28,10 @@ private:
 	void Init();
 	void update();
 	void menu();
-	void battle(Monster* monster);
+	void battle(size_t index);
+	bool generatePair(size_t& posX, size_t& posY, size_t size);
+	void createHero();
+	void loadHero();
 public:
 	Game();
 	~Game();

@@ -5,12 +5,9 @@ Warrior::Warrior(const char * name) : Hero(name, WARRIOR_STRENGTH, WARRIOR_INTEL
 
 void Warrior::levelUp()
 {
-	if (killedMonsters == (2 << level))        //TODO: v game da go opravq
-	{
-		Hero::levelUp();
-		strength += (WARRIOR_STRENGTH / 3.0);
-		intelligence += (WARRIOR_INTELLIGENCE / 3.0);
-	}
+	Hero::levelUp();
+	strength += (WARRIOR_STRENGTH / 3.0);
+	intelligence += (WARRIOR_INTELLIGENCE / 3.0);
 }
 
 double Warrior::getAttack()

@@ -12,12 +12,12 @@ protected:
 	unsigned int level;
 	unsigned int killedMonsters;
 
-	virtual void levelUp();
 public:
 	Hero(const char* newName, double newStrength, size_t newIntelligence);
 	
 	virtual void defend(double heroAttack) = 0;
 	virtual double getAttack() = 0;
+	virtual void levelUp();
 	void printInfo() const override;
 
 	size_t getX() const { return x; }
@@ -30,6 +30,8 @@ public:
 	void moveDown();
 	void moveLeft();
 	void moveRight();
+
+	void increaseKilledMonsters();
 };
 
 #endif

@@ -14,7 +14,7 @@ int Game::heroMetMonster()
 
 Game::Game()
 {
-	hero = new Warrior("Ali");
+	hero = nullptr;
 	size_t posX;
 	size_t posY;
 	char buff[2] = { 0, };
@@ -26,21 +26,13 @@ Game::Game()
 	bool flag = false;
 	while (count_monster < AMOUNT_OF_MONS)
 	{
-		posX = (rand() % (WIDTH - 2)) + 1;
-		posY = (rand() % (HEIGHT - 2)) + 1;
-		flag = true;
-		for(size_t j = 0; j < count_monster; ++j)
-		{
-			if (positions[j][0] == posX && positions[j][1] == posY) {
-				flag = false;
-				break;
-			}
-		}
+		flag = generatePair(posX, posY, count_monster);
 		if (flag) {
 			positions[count_monster][0] = posX;
 			positions[count_monster][1] = posY;
 			++count_monster;
 		}
+
 	}
 	for (size_t i = 0; i < AMOUNT_GOBLINS; ++i)
 	{	
@@ -71,7 +63,7 @@ Game::~Game()
 
 void Game::start()
 {
-	mainLoop();
+	menu();
 }
 
 void Game::mainLoop()
@@ -112,7 +104,7 @@ void Game::mainLoop()
 			std::cout << index << std::endl;
 			if (index != (-1))
 			{
-				battle(monsters[index]);
+				battle(index);
 			}
 			update();
 		}
@@ -171,11 +163,130 @@ void Game::update()
 
 void Game::menu()
 {
+	int options = -1;
+	bool arrow;
+	char key;
+	std::cout << "Welcome to the game WOW!" << std::endl;
+	std::cout << "PLAY" << std::endl;
+	std::cout << "NEW HERO" << std::endl;
+	std::cout << "LOAD HERO" << std::endl;
+	std::cout << "EXIT" << std::endl;
+	while (true)
+	{
+		Sleep(1);
+		arrow = false;
+		if (_kbhit())
+		{
+			key = _getch();
+			if (key == -32 || key == 0)
+			{
+				arrow = true;
+				key = _getch();
+			}
+			if (arrow && key == UP_ARROW)
+			{
+				options--;
+				if (options == -1)
+				{
+					options = MAX_OPTIONS_IN_MENU - 1;
+				}
+			}
+			else if (arrow && key == DOWN_ARROW)
+			{
+				options++;
+				if (options == MAX_OPTIONS_IN_MENU)
+				{
+					options = 0;
+				}
+			}
+			else if (key == ENTER)
+			{
+				if (options == 0)
+				{
+					if (hero != nullptr)
+					{
+						mainLoop();
+					}
+					else
+					{
+						std::cout << "Create a hero or load a previos one!" << std::endl;
+						Sleep(1000);
+					}
+				
+				}
+				else if (options == 1)
+				{
+					createHero();
+				}
+				else if (options == 2)
+				{
+					loadHero();
+				}
+				else if (options == 3)
+				{
+					std::cout << "See you next time, friend!" << std::endl;
+					Sleep(1);
+					exit(0);
+				}
+			}
+			system("cls");
+			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+			int red = 12;
+			int white = 15;
+			if (options == 0)
+			{
+				SetConsoleTextAttribute(hConsole, red);
+				std::cout << "PLAY" << std::endl;
 
+				SetConsoleTextAttribute(hConsole, white);
+				std::cout << "NEW HERO" << std::endl;
+				std::cout << "LOAD HERO" << std::endl;
+				std::cout << "EXIT" << std::endl;
+
+			}
+			else if (options == 1) 
+			{
+				SetConsoleTextAttribute(hConsole, white);
+				std::cout << "PLAY" << std::endl;
+
+				SetConsoleTextAttribute(hConsole, red);
+				std::cout << "NEW HERO" << std::endl;
+			
+				SetConsoleTextAttribute(hConsole, white);
+				std::cout << "LOAD HERO" << std::endl;
+				std::cout << "EXIT" << std::endl;
+			}
+			else if (options == 2)
+			{
+				SetConsoleTextAttribute(hConsole, white);
+				std::cout << "PLAY" << std::endl;
+				std::cout << "NEW HERO" << std::endl;
+
+				SetConsoleTextAttribute(hConsole, red);
+				std::cout << "LOAD HERO" << std::endl;
+
+				SetConsoleTextAttribute(hConsole, white);
+				std::cout << "EXIT" << std::endl;
+			}
+			else if (options == 3)
+			{
+				SetConsoleTextAttribute(hConsole, white);
+				std::cout << "PLAY" << std::endl;
+				std::cout << "NEW HERO" << std::endl;
+				std::cout << "LOAD HERO" << std::endl;
+
+				SetConsoleTextAttribute(hConsole, red);
+				std::cout << "EXIT" << std::endl;
+
+				SetConsoleTextAttribute(hConsole, white);
+			}
+		}
+	}
 }
 
-void Game::battle(Monster * monster)
+void Game::battle(size_t index)
 {
+	Monster* monster = monsters[index];
 	char optionHero;
 	system("cls");
 	while (hero->getHP() > 0.0 && monster->getHP() > 0.0)
@@ -215,5 +326,153 @@ void Game::battle(Monster * monster)
 			std::cout << "Invalid command!" << std::endl;
 		}
 	}
+	if (monster->getHP() <= 0.0)
+	{
+		hero->increaseKilledMonsters();
+		if (hero->getKilledMons() == (1 << hero->getLevel()))
+		{
+			hero->levelUp();
+		}
+		delete monster;
+		size_t posX, posY;
+		while (!generatePair(posX, posY, AMOUNT_OF_MONS));
+		if (index < AMOUNT_GOBLINS)
+		{
+			monster = new Goblin("Goblin", posX, posY);
+		}
+		else if (index >= AMOUNT_GOBLINS && index < AMOUNT_GOBLINS + AMOUNT_DRAGONKIN)
+		{
+			monster = new Dragonkin("Dragonkin", posX, posY);
+		}
+		else
+		{
+			monster = new DeathKnight("DeathKnight", posX, posY);
+		}
+		positions[index][0] = posX;
+		positions[index][1] = posY;
+	}
+}
+
+bool Game::generatePair(size_t& posX, size_t& posY, size_t size)
+{
+	posX = (rand() % (WIDTH - 2)) + 1;
+	posY = (rand() % (HEIGHT - 2)) + 1;
+	for (size_t j = 0; j < size; ++j)
+	{
+		if (positions[j][0] == posX && positions[j][1] == posY) {
+			return false;
+		}
+	}
+	return true;
+}
+
+void Game::createHero()
+{
+	system("cls");
+	std::cout << "Choose one of the heroes: " << std::endl;
+	std::cout << "->Warrior" << std::endl;
+	std::cout << "->Paladin" << std::endl;
+	std::cout << "->Mage" << std::endl;
+	int options = -1;
+	bool arrow;
+	char key;
+	char nameHero[128];
+	while (true)
+	{
+		Sleep(1);
+		arrow = false;
+		if (_kbhit())
+		{
+			key = _getch();
+			if (key == -32 || key == 0)
+			{
+				arrow = true;
+				key = _getch();
+			}
+			if (arrow && key == UP_ARROW)
+			{
+				options--;
+				if (options == -1)
+				{
+					options = MAX_OPTIONS_IN_HEROES_MENU - 1;
+				}
+			}
+			else if (arrow && key == DOWN_ARROW)
+			{
+				options++;
+				if (options == MAX_OPTIONS_IN_HEROES_MENU)
+				{
+					options = 0;
+				}
+			}
+			else if (key == ENTER)
+			{
+				if (options == 0)
+				{
+					system("cls");
+					std::cout << "Enter hero name: " << std::endl;
+					std::cin.getline(nameHero, 128);
+					hero = new Warrior(nameHero);
+					return;
+				}
+				else if (options == 1)
+				{
+					system("cls");
+					std::cout << "Enter hero name: " << std::endl;
+					std::cin.getline(nameHero, 128);
+					hero = new Paladin(nameHero);
+					return;
+				}
+				else if (options == 2)
+				{
+					system("cls");
+					std::cout << "Enter hero name: " << std::endl;
+					std::cin.getline(nameHero, 128);
+					hero = new Mage(nameHero);
+					return;
+				}
+			}
+			system("cls");
+			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+			int red = 12;
+			int white = 15;
+			if (options == 0)
+			{
+				SetConsoleTextAttribute(hConsole, red);
+				std::cout << "->Warrior" << std::endl;
+
+				SetConsoleTextAttribute(hConsole, white);
+				std::cout << "->Paladin" << std::endl;
+				std::cout << "->Mage" << std::endl;
+			}
+			else if (options == 1)
+			{
+				SetConsoleTextAttribute(hConsole, white);
+				std::cout << "->Warrior" << std::endl;
+
+				SetConsoleTextAttribute(hConsole, red);
+				std::cout << "->Paladin" << std::endl;
+
+				SetConsoleTextAttribute(hConsole, white);
+				std::cout << "->Mage" << std::endl;
+			}
+			else if (options == 2)
+			{
+				SetConsoleTextAttribute(hConsole, white);
+				std::cout << "->Warrior" << std::endl;
+				std::cout << "->Paladin" << std::endl;
+
+				SetConsoleTextAttribute(hConsole, red);
+				std::cout << "->Mage" << std::endl;
+
+				SetConsoleTextAttribute(hConsole, white);
+			}
+		}
+	}
+}
+
+void Game::loadHero()
+{
+
 }
 

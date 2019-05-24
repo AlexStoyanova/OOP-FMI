@@ -14,6 +14,7 @@ public:
 	virtual void defend(double heroAttack) = 0;
 	virtual void printInfo() const override;
 
+
 };
 
 #endif

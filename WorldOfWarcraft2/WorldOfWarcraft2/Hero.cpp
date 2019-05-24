@@ -1,7 +1,7 @@
 #include "Hero.h"
 
 Hero::Hero(const char * newName, double newStrength, size_t newIntelligence) :
-	Entity(newName, 100, newStrength, newIntelligence, 1, 1), level(0), killedMonsters(0)
+	Entity(newName, 100, newStrength, 1, 1, newIntelligence), level(0), killedMonsters(0)
 {}
 
 void Hero::printInfo() const
@@ -40,6 +40,11 @@ void Hero::moveRight()
 	{
 		++x;
 	}
+}
+
+void Hero::increaseKilledMonsters()
+{
+	killedMonsters++;
 }
 
 void Hero::levelUp()

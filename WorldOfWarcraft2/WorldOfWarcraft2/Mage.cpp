@@ -5,13 +5,10 @@ Mage::Mage(const char * name) : Hero(name, MAGE_STRENGTH, MAGE_INTELLIGENCE), ma
 {}
 
 void Mage::levelUp()
-{
-	if (killedMonsters == (2 << level))
-	{
-		Hero::levelUp();
-		strength += (MAGE_STRENGTH / 3.0);
-		intelligence += (MAGE_INTELLIGENCE / 3.0);
-	}
+{	
+	Hero::levelUp();
+	strength += (MAGE_STRENGTH / 3.0);
+	intelligence += (MAGE_INTELLIGENCE / 3.0);
 }
 
 double Mage::getAttack()

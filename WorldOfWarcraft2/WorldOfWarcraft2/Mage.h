@@ -8,13 +8,13 @@ class Mage : public Hero
 private:
 	double mana;
 
-	void levelUp();
 public:
 	Mage(const char* name);
 
 	double getAttack();
 	void defend(double heroAttack) override;
 	void printInfo() const override;
+	void levelUp();
 
 };
 #endif

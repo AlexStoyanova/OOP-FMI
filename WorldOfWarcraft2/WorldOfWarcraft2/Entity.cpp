@@ -14,7 +14,7 @@ void Entity::clear()
 	delete[] name;
 }
 
-Entity::Entity(const char * newName, double newHP, double newStrength, double newIntelligence, size_t newX, size_t newY) :
+Entity::Entity(const char * newName, double newHP, double newStrength, size_t newX, size_t newY, double newIntelligence) :
 	HP(newHP), strength(newStrength), intelligence(newIntelligence), x(newX), y(newY)
 {
 	name = new char[strlen(newName) + 1];

@@ -17,7 +17,7 @@ private:
 	void copyFrom(const Entity& other);
 	void clear();
 public:
-	Entity(const char* newName, double newHP = 0, double newStrength = 0, double newIntelligence = 0, size_t newX = 0, size_t newY = 0);
+	Entity(const char* newName, double newHP = 0.0, double newStrength = 0.0, size_t newX = 0, size_t newY = 0, double newIntelligence = 0.0);
 	Entity(const Entity& other);
 	Entity& operator=(const Entity& rhs);
 	virtual ~Entity();
@@ -27,6 +27,8 @@ public:
 
 	double getIntelligence() const { return intelligence; }
 	double getHP() const { return HP; }
+	size_t getX() const { return x; }
+	size_t getY() const { return y; }
 
 	void decreaseHP(double value);
 };
