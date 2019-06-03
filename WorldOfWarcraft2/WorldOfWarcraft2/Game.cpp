@@ -51,7 +51,7 @@ Game::Game()
 		memset(monsterName, 0, 10);
 	}
 
-	std::ifstream ifs(DB_FILE_NAME, std::ios::binary);
+	/*std::ifstream ifs(DB_FILE_NAME, std::ios::binary);
 	if (!ifs.good())
 	{
 		numHeroInList = 0;
@@ -63,7 +63,7 @@ Game::Game()
 	{
 		ifs.read((char*)&numHeroInList, sizeof(size_t));
 	}
-	ifs.close();
+	ifs.close();*/
 }
 
 Game::~Game()
@@ -498,28 +498,32 @@ void Game::createHero()
 
 void Game::loadHero()
 {
-	size_t tempNumHeroInList;
-	size_t allHeroesInList;
-	size_t lenHeroName;
+	size_t tempNumHeroInList = 0;
+	size_t allHeroesInList = 0;
+	size_t lenHeroName = 0;
 	char* tempHeroName;
-	double tempHp;
-	double tempStrength;
-	double tempIntelligence;
-	size_t tempLevel;
-	size_t identificator;
+	double tempHp = 0.0;
+	double tempStrength = 0.0;
+	double tempIntelligence = 0.0;
+	size_t tempLevel = 0;
+	size_t identificator = 0;
 	char blank[5];
 
 	std::ifstream ifs(DB_FILE_NAME, std::ios::binary);
 	if (ifs.is_open())
 	{
-		ifs.read((char*)&allHeroesInList, sizeof(allHeroesInList));
+	//	ifs.read((char*)&allHeroesInList, sizeof(allHeroesInList));
 		while (!ifs.eof())
 		{
-			//ifs.read(blank, sizeof("\n"));
+			ifs.read(blank, sizeof("\n"));
+			if (ifs.eof())
+			{
+				break;
+			}
 
-			ifs.read((char*)&tempNumHeroInList, sizeof(size_t));
+		//	ifs.read((char*)&tempNumHeroInList, sizeof(tempNumHeroInList));
 
-			ifs.read((char*)&lenHeroName, sizeof(size_t));
+			ifs.read((char*)&lenHeroName, sizeof(lenHeroName));
 
 			if (ifs.eof())
 			{
@@ -529,33 +533,31 @@ void Game::loadHero()
 			tempHeroName = new char[lenHeroName + 1];
 
 			ifs.read(tempHeroName, sizeof(lenHeroName));
+			if (ifs.eof())
+			{
+				break;
+			}
 
 			tempHeroName[lenHeroName] = '\0';
 			
-			ifs.read((char*)&tempHp, sizeof(double));
+			ifs.read((char*)&tempHp, sizeof(tempHp));
 		
-			ifs.read((char*)&tempStrength, sizeof(double));
+			ifs.read((char*)&tempStrength, sizeof(tempStrength));
 		
-			ifs.read((char*)&tempIntelligence, sizeof(double));
+			ifs.read((char*)&tempIntelligence, sizeof(tempIntelligence));
 			
-			ifs.read((char*)&tempLevel, sizeof(size_t));
+			ifs.read((char*)&tempLevel, sizeof(tempLevel));
 
-			std::cout << tempNumHeroInList << " ";
+		//	std::cout << tempNumHeroInList << " ";
+			system("cls");
 			printHero(tempHeroName, tempHp, tempStrength, tempIntelligence, tempLevel);
 			Sleep(10000);
 		}
 	}
 	system("cls");
-	if (allHeroesInList > 0)
-	{
-		std::cout << "Choose hero by number: " << std::endl;
-		std::cin >> identificator;
-	}
-	else
-	{
-		std::cout << "List is empty, go to new hero!" << std::endl;
-		Sleep(1000);
-	}
+	std::cout << "Choose hero by number: " << std::endl;
+	std::cin >> identificator;
+
 	ifs.close();
 }
 
@@ -564,10 +566,10 @@ void Game::saveHeroInFile()
 	std::ofstream ofs(DB_FILE_NAME, std::ios::binary | std::ios::app);
 	if (ofs.is_open())
 	{
-		numHeroInList++;
-		ofs.seekp(0, std::ios::beg);
-		ofs.write((const char*)&numHeroInList, sizeof(numHeroInList));
-		ofs.seekp(0, std::ios::end);
+	//	numHeroInList++;
+	//	ofs.seekp(0, std::ios::beg);
+	//  ofs.write((const char*)&numHeroInList, sizeof(numHeroInList));
+	//  ofs.seekp(0, std::ios::end);
 		hero->serialize(ofs, numHeroInList);
 	}
 	ofs.close();

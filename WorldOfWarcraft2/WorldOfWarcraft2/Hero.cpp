@@ -51,16 +51,16 @@ void Hero::serialize(std::ofstream& ofs, size_t& numHeroInList)
 {
 	if (ofs.is_open())
 	{
-		//ofs.write((const char*)&("\n"), sizeof("\n"));
+		ofs.write(("\n"), sizeof("\n"));
 
-		ofs.write((const char*)&numHeroInList, sizeof(numHeroInList));
+		//ofs.write((const char*)&numHeroInList, sizeof(numHeroInList));
 
 		size_t lenHeroName = strlen(name);
 
 		ofs.write((const char*)&lenHeroName, sizeof(lenHeroName));
 
 		ofs.write(name, lenHeroName);
-		
+
 		ofs.write((const char*)&HP, sizeof(HP));
 		
 		ofs.write((const char*)&strength, sizeof(strength));

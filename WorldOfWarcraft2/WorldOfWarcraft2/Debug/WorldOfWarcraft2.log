@@ -1,6 +1,3 @@
-﻿  Hero.cpp
-  Game.cpp
+﻿  Game.cpp
 c:\users\alexandra\source\repos\worldofwarcraft2\worldofwarcraft2\game.cpp(26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\alexandra\source\repos\worldofwarcraft2\worldofwarcraft2\game.cpp(510): warning C4101: 'blank': unreferenced local variable
-  Generating Code...
   WorldOfWarcraft2.vcxproj -> C:\Users\Alexandra\source\repos\WorldOfWarcraft2\Debug\WorldOfWarcraft2.exe
