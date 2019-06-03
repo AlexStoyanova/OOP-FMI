@@ -13,8 +13,9 @@ void Dragonkin::defend(double heroAttack)
 	//vsqka treta zashtita namalq shtetite sus 100% (toest ne mu nanasqt shteti)
 	if (defense % 3 == 0)
 	{
-
+		decreaseHP(0);
 	}
+	decreaseHP(heroAttack / strength);
 }
 
 void Dragonkin::printInfo() const

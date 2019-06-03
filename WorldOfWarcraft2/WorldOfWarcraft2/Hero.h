@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Monster.h"
 #include <cmath>
+#include <fstream>
 
 class Monster;
 
@@ -32,6 +33,8 @@ public:
 	void moveRight();
 
 	void increaseKilledMonsters();
+
+	virtual void serialize(std::ofstream& ofs, size_t& numHeroInList);
 };
 
 #endif

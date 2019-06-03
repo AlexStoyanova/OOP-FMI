@@ -34,4 +34,9 @@ void Paladin::printInfo() const
 	Hero::printInfo();
 }
 
+void Paladin::serialize(std::ofstream & ofs, size_t & numHeroInList)
+{
+	Hero::serialize(ofs, numHeroInList);
+}
+
 

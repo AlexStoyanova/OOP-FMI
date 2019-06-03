@@ -13,6 +13,7 @@ public:
 	double getAttack();
 	void defend(double heroAttack) override;
 	void printInfo() const override;
+	void serialize(std::ofstream& ofs, size_t& numHeroInList) override;
 
 };
 

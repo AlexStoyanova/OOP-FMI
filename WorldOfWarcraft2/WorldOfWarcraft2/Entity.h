@@ -26,9 +26,11 @@ public:
 	virtual void printInfo() const;
 
 	double getIntelligence() const { return intelligence; }
+	double getStrength() const { return strength; }
 	double getHP() const { return HP; }
 	size_t getX() const { return x; }
 	size_t getY() const { return y; }
+	const char* getName() const { return name; }
 
 	void decreaseHP(double value);
 };

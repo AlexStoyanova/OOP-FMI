@@ -1,5 +1,7 @@
 #include "Game.h"
 
+const char* DB_FILE_NAME = "data.bin";
+
 int Game::heroMetMonster()
 {
 	for (size_t i = 0; i < AMOUNT_OF_MONS; ++i)
@@ -32,7 +34,6 @@ Game::Game()
 			positions[count_monster][1] = posY;
 			++count_monster;
 		}
-
 	}
 	for (size_t i = 0; i < AMOUNT_GOBLINS; ++i)
 	{	
@@ -49,6 +50,20 @@ Game::Game()
 		monsters[i] = new DeathKnight("DeathKnight", positions[i][0], positions[i][1]);
 		memset(monsterName, 0, 10);
 	}
+
+	std::ifstream ifs(DB_FILE_NAME, std::ios::binary);
+	if (!ifs.good())
+	{
+		numHeroInList = 0;
+		std::ofstream ofs(DB_FILE_NAME, std::ios::binary);
+		ofs.write((const char*)&numHeroInList, sizeof(size_t));
+		ofs.close();
+	}
+	else
+	{
+		ifs.read((char*)&numHeroInList, sizeof(size_t));
+	}
+	ifs.close();
 }
 
 Game::~Game()
@@ -100,8 +115,11 @@ void Game::mainLoop()
 			{
 				hero->moveRight();
 			}
+			else if (key == EXIT)
+			{
+				return;
+			}
 			int index = heroMetMonster();
-			std::cout << index << std::endl;
 			if (index != (-1))
 			{
 				battle(index);
@@ -206,13 +224,16 @@ void Game::menu()
 					if (hero != nullptr)
 					{
 						mainLoop();
+						if (hero->getHP() > 0.0)
+						{
+							saveHeroInFile();
+						}
 					}
 					else
 					{
-						std::cout << "Create a hero or load a previos one!" << std::endl;
+						std::cout << "Create a hero or load a previous one!" << std::endl;
 						Sleep(1000);
 					}
-				
 				}
 				else if (options == 1)
 				{
@@ -303,10 +324,12 @@ void Game::battle(size_t index)
 			{
 				monster->decreaseHP(hero->getAttack());
 				hero->decreaseHP(monster->getAttack(hero));
+				std::cout << std::endl << "Monster attacks you!" << std::endl;
 			}
 			else                                    // monster defends
 			{
 				monster->defend(hero->getAttack());
+				std::cout << std::endl << "Monster defends!" << std::endl;
 			}	
 		}
 		else if (optionHero == 'd')
@@ -314,11 +337,13 @@ void Game::battle(size_t index)
 			if (optionMonster == 0)                  // monster attacks
 			{
 				hero->defend(monster->getAttack(hero));
+				std::cout << std::endl << "Monster attacks you!" << std::endl;
 			}
 			else                                    // monster defends
 			{
 				hero->defend(0);
 				monster->defend(0);
+				std::cout << std::endl << "Monster defends!" << std::endl;
 			}
 		}
 		else
@@ -473,6 +498,84 @@ void Game::createHero()
 
 void Game::loadHero()
 {
+	size_t tempNumHeroInList;
+	size_t allHeroesInList;
+	size_t lenHeroName;
+	char* tempHeroName;
+	double tempHp;
+	double tempStrength;
+	double tempIntelligence;
+	size_t tempLevel;
+	size_t identificator;
+	char blank[5];
 
+	std::ifstream ifs(DB_FILE_NAME, std::ios::binary);
+	if (ifs.is_open())
+	{
+		ifs.read((char*)&allHeroesInList, sizeof(allHeroesInList));
+		while (!ifs.eof())
+		{
+			//ifs.read(blank, sizeof("\n"));
+
+			ifs.read((char*)&tempNumHeroInList, sizeof(size_t));
+
+			ifs.read((char*)&lenHeroName, sizeof(size_t));
+
+			if (ifs.eof())
+			{
+				break;
+			}
+
+			tempHeroName = new char[lenHeroName + 1];
+
+			ifs.read(tempHeroName, sizeof(lenHeroName));
+
+			tempHeroName[lenHeroName] = '\0';
+			
+			ifs.read((char*)&tempHp, sizeof(double));
+		
+			ifs.read((char*)&tempStrength, sizeof(double));
+		
+			ifs.read((char*)&tempIntelligence, sizeof(double));
+			
+			ifs.read((char*)&tempLevel, sizeof(size_t));
+
+			std::cout << tempNumHeroInList << " ";
+			printHero(tempHeroName, tempHp, tempStrength, tempIntelligence, tempLevel);
+			Sleep(10000);
+		}
+	}
+	system("cls");
+	if (allHeroesInList > 0)
+	{
+		std::cout << "Choose hero by number: " << std::endl;
+		std::cin >> identificator;
+	}
+	else
+	{
+		std::cout << "List is empty, go to new hero!" << std::endl;
+		Sleep(1000);
+	}
+	ifs.close();
+}
+
+void Game::saveHeroInFile()
+{
+	std::ofstream ofs(DB_FILE_NAME, std::ios::binary | std::ios::app);
+	if (ofs.is_open())
+	{
+		numHeroInList++;
+		ofs.seekp(0, std::ios::beg);
+		ofs.write((const char*)&numHeroInList, sizeof(numHeroInList));
+		ofs.seekp(0, std::ios::end);
+		hero->serialize(ofs, numHeroInList);
+	}
+	ofs.close();
+}
+
+void Game::printHero(const char* name, double& hp, double& strength, double& intelligence, size_t& level) const
+{
+	std::cout << "Hero name: " << name << ", HP: " << hp << ", strength: " << strength << ", intelligence: " 
+		      << intelligence << ", level: " << level << std::endl;
 }
 

@@ -31,4 +31,10 @@ void Warrior::printInfo() const
 	std::cout << "Rage: " << rage << std::endl;
 }
 
+void Warrior::serialize(std::ofstream& ofs, size_t & numHeroInList)
+{
+	Hero::serialize(ofs, numHeroInList);
+	ofs.write((const char*)&rage, sizeof(rage));
+}
+
 
