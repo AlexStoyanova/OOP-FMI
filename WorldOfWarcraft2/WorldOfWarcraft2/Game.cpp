@@ -1,6 +1,6 @@
 #include "Game.h"
 
-const char* DB_FILE_NAME = "data.bin";
+const char* DB_FILE_NAME = "data.txt";
 
 int Game::heroMetMonster()
 {
@@ -51,19 +51,19 @@ Game::Game()
 		memset(monsterName, 0, 10);
 	}
 
-	/*std::ifstream ifs(DB_FILE_NAME, std::ios::binary);
+	std::ifstream ifs(DB_FILE_NAME);
 	if (!ifs.good())
 	{
 		numHeroInList = 0;
-		std::ofstream ofs(DB_FILE_NAME, std::ios::binary);
-		ofs.write((const char*)&numHeroInList, sizeof(size_t));
+		std::ofstream ofs(DB_FILE_NAME);
+		ofs << numHeroInList << ' ';
 		ofs.close();
 	}
 	else
 	{
-		ifs.read((char*)&numHeroInList, sizeof(size_t));
+		ifs >> numHeroInList;
 	}
-	ifs.close();*/
+	ifs.close();
 }
 
 Game::~Game()
@@ -499,85 +499,64 @@ void Game::createHero()
 void Game::loadHero()
 {
 	size_t tempNumHeroInList = 0;
-	size_t allHeroesInList = 0;
-	size_t lenHeroName = 0;
-	char* tempHeroName;
-	double tempHp = 0.0;
-	double tempStrength = 0.0;
-	double tempIntelligence = 0.0;
-	size_t tempLevel = 0;
-	size_t identificator = 0;
-	char blank[5];
+	char identity[2];
+	size_t counter = 0;
 
-	std::ifstream ifs(DB_FILE_NAME, std::ios::binary);
+	std::ifstream ifs(DB_FILE_NAME);
 	if (ifs.is_open())
 	{
-	//	ifs.read((char*)&allHeroesInList, sizeof(allHeroesInList));
+		Hero** loadHeroes;
+		ifs >> tempNumHeroInList;
+		ifs.seekg(1, std::ios::cur);
+		loadHeroes = new Hero*[tempNumHeroInList];
 		while (!ifs.eof())
 		{
-			ifs.read(blank, sizeof("\n"));
+			ifs.getline(identity, 2, ' ');
 			if (ifs.eof())
 			{
 				break;
 			}
-
-		//	ifs.read((char*)&tempNumHeroInList, sizeof(tempNumHeroInList));
-
-			ifs.read((char*)&lenHeroName, sizeof(lenHeroName));
-
-			if (ifs.eof())
+			if (strcmp(identity, "w") == 0)
 			{
-				break;
+				loadHeroes[counter++] = new Warrior(ifs);
 			}
-
-			tempHeroName = new char[lenHeroName + 1];
-
-			ifs.read(tempHeroName, sizeof(lenHeroName));
-			if (ifs.eof())
+			else if (strcmp(identity, "m") == 0)
 			{
-				break;
+				loadHeroes[counter++] = new Mage(ifs);
 			}
-
-			tempHeroName[lenHeroName] = '\0';
-			
-			ifs.read((char*)&tempHp, sizeof(tempHp));
-		
-			ifs.read((char*)&tempStrength, sizeof(tempStrength));
-		
-			ifs.read((char*)&tempIntelligence, sizeof(tempIntelligence));
-			
-			ifs.read((char*)&tempLevel, sizeof(tempLevel));
-
-		//	std::cout << tempNumHeroInList << " ";
-			system("cls");
-			printHero(tempHeroName, tempHp, tempStrength, tempIntelligence, tempLevel);
-			Sleep(10000);
+			else if (strcmp(identity, "p") == 0)
+			{
+				loadHeroes[counter++] = new Paladin(ifs);
+			}
 		}
+		system("cls");
+		for (size_t i = 0; i < tempNumHeroInList; ++i)
+		{
+			loadHeroes[i]->printInfo();
+		}
+		std::cout << "Choose hero by number: " << std::endl;
+		for (size_t i = 0; i < tempNumHeroInList; ++i)
+		{
+			delete loadHeroes[i];
+		}
+		delete[] loadHeroes;
 	}
-	system("cls");
-	std::cout << "Choose hero by number: " << std::endl;
-	std::cin >> identificator;
+
 
 	ifs.close();
 }
 
 void Game::saveHeroInFile()
 {
-	std::ofstream ofs(DB_FILE_NAME, std::ios::binary | std::ios::app);
+	std::ofstream ofs(DB_FILE_NAME, std::ios::app);
 	if (ofs.is_open())
 	{
-	//	numHeroInList++;
-	//	ofs.seekp(0, std::ios::beg);
-	//  ofs.write((const char*)&numHeroInList, sizeof(numHeroInList));
-	//  ofs.seekp(0, std::ios::end);
+		numHeroInList++;
+		ofs.seekp(0, std::ios::beg);
+		ofs << numHeroInList << ' ';
+	    ofs.seekp(0, std::ios::end);
 		hero->serialize(ofs, numHeroInList);
 	}
 	ofs.close();
-}
-
-void Game::printHero(const char* name, double& hp, double& strength, double& intelligence, size_t& level) const
-{
-	std::cout << "Hero name: " << name << ", HP: " << hp << ", strength: " << strength << ", intelligence: " 
-		      << intelligence << ", level: " << level << std::endl;
 }
 

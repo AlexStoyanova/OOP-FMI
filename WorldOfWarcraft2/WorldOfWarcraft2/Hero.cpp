@@ -4,6 +4,30 @@ Hero::Hero(const char * newName, double newStrength, size_t newIntelligence) :
 	Entity(newName, 100, newStrength, 1, 1, newIntelligence), level(0), killedMonsters(0)
 {}
 
+Hero::Hero(std::ifstream & ifs) : Entity()
+{
+	char buff[128];
+	if (ifs.is_open())
+	{
+		if (ifs.eof())
+		{
+			return;
+		}
+		ifs.getline(buff, 128, ' ');
+		if (ifs.eof())
+		{
+			return;
+		}
+		ifs >> HP >> strength >> intelligence >> level;
+		if (ifs.eof())
+		{
+			return;
+		}
+	}
+	strcpy_s(name, 128, buff);
+	memset(buff, 0, 128);
+}
+
 void Hero::printInfo() const
 {
 	Entity::printInfo();
@@ -51,25 +75,10 @@ void Hero::serialize(std::ofstream& ofs, size_t& numHeroInList)
 {
 	if (ofs.is_open())
 	{
-		ofs.write(("\n"), sizeof("\n"));
-
-		//ofs.write((const char*)&numHeroInList, sizeof(numHeroInList));
-
-		size_t lenHeroName = strlen(name);
-
-		ofs.write((const char*)&lenHeroName, sizeof(lenHeroName));
-
-		ofs.write(name, lenHeroName);
-
-		ofs.write((const char*)&HP, sizeof(HP));
-		
-		ofs.write((const char*)&strength, sizeof(strength));
-	
-		ofs.write((const char*)&intelligence, sizeof(intelligence));
-
-		ofs.write((const char*)&level, sizeof(level));
+		ofs << name << ' ' << HP << ' ' << strength << ' ' << intelligence << ' ' << level << ' ';
 	}
 }
+
 
 void Hero::levelUp()
 {

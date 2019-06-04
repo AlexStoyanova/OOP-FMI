@@ -3,6 +3,18 @@
 Warrior::Warrior(const char * name) : Hero(name, WARRIOR_STRENGTH, WARRIOR_INTELLIGENCE), rage(0)
 {}
 
+Warrior::Warrior(std::ifstream & ifs) : Hero(ifs)
+{
+	if (ifs.is_open())
+	{
+		ifs >> rage;
+		if (ifs.eof())
+		{
+			return;
+		}
+	}
+}
+
 void Warrior::levelUp()
 {
 	Hero::levelUp();
@@ -33,8 +45,9 @@ void Warrior::printInfo() const
 
 void Warrior::serialize(std::ofstream& ofs, size_t & numHeroInList)
 {
+	ofs << "w" << ' ';
 	Hero::serialize(ofs, numHeroInList);
-	ofs.write((const char*)&rage, sizeof(rage));
+	ofs << rage << ' ';
 }
 
 

@@ -10,6 +10,7 @@ private:
 
 public:
 	Mage(const char* name);
+	Mage(std::ifstream& ifs);
 
 	double getAttack();
 	void defend(double heroAttack) override;

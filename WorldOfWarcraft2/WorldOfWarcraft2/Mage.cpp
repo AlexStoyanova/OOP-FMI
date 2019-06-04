@@ -4,6 +4,14 @@
 Mage::Mage(const char * name) : Hero(name, MAGE_STRENGTH, MAGE_INTELLIGENCE), mana(100.0)
 {}
 
+Mage::Mage(std::ifstream & ifs) : Hero(ifs)
+{
+	if (ifs.is_open())
+	{
+		ifs >> mana;
+	}
+}
+
 void Mage::levelUp()
 {	
 	Hero::levelUp();
@@ -13,8 +21,9 @@ void Mage::levelUp()
 
 void Mage::serialize(std::ofstream& ofs, size_t & numHeroInList)
 {
+	ofs << "m" << ' ';
 	Hero::serialize(ofs, numHeroInList);
-	ofs.write((const char*)&mana, sizeof(double));
+	ofs << mana << ' ';
 }
 
 double Mage::getAttack()

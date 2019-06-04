@@ -1,3 +1,6 @@
 ﻿  Game.cpp
 c:\users\alexandra\source\repos\worldofwarcraft2\worldofwarcraft2\game.cpp(26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  main.cpp
   WorldOfWarcraft2.vcxproj -> C:\Users\Alexandra\source\repos\WorldOfWarcraft2\Debug\WorldOfWarcraft2.exe

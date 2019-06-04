@@ -15,6 +15,7 @@ protected:
 
 public:
 	Hero(const char* newName, double newStrength, size_t newIntelligence);
+	Hero(std::ifstream& ifs);
 	
 	virtual void defend(double heroAttack) = 0;
 	virtual double getAttack() = 0;

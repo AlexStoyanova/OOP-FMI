@@ -35,8 +35,6 @@ private:
 	void createHero();
 	void loadHero();
 	void saveHeroInFile();
-
-	void printHero(const char* name, double& hp, double& strength, double& intelligence, size_t& level) const;
 public:
 	Game();
 	~Game();

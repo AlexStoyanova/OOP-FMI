@@ -9,6 +9,7 @@ private:
 	double rage;
 public:
 	Warrior(const char* name);
+	Warrior(std::ifstream& ifs);
 
 	void levelUp() override;
 	double getAttack() override;

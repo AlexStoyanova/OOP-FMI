@@ -3,6 +3,10 @@
 Paladin::Paladin(const char* name) : Hero(name, PALADIN_STRENGTH, PALADIN_INTELLIGENCE), strike(0)
 {}
 
+Paladin::Paladin(std::ifstream & ifs) : Hero(ifs)
+{
+}
+
 void Paladin::levelUp()
 {
 
@@ -36,6 +40,7 @@ void Paladin::printInfo() const
 
 void Paladin::serialize(std::ofstream & ofs, size_t & numHeroInList)
 {
+	ofs << "p" << ' ';
 	Hero::serialize(ofs, numHeroInList);
 }
 

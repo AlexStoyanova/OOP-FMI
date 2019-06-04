@@ -8,6 +8,7 @@ class Paladin : public Hero
 	unsigned int strike;
 public:
 	Paladin(const char* name);
+	Paladin(std::ifstream& ifs);
 
 	void levelUp();
 	double getAttack();
