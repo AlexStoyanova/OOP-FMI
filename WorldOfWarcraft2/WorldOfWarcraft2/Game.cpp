@@ -55,7 +55,7 @@ Game::Game()
 	if (!ifs.good())
 	{
 		numHeroInList = 0;
-		std::ofstream ofs(DB_FILE_NAME);
+		std::ofstream ofs(DB_FILE_NAME, std::ios::ate);
 		ofs << numHeroInList << ' ';
 		ofs.close();
 	}
@@ -246,7 +246,7 @@ void Game::menu()
 				else if (options == 3)
 				{
 					std::cout << "See you next time, friend!" << std::endl;
-					Sleep(1);
+					Sleep(100);
 					exit(0);
 				}
 			}
@@ -501,6 +501,7 @@ void Game::loadHero()
 	size_t tempNumHeroInList = 0;
 	char identity[2];
 	size_t counter = 0;
+	size_t choice;
 
 	std::ifstream ifs(DB_FILE_NAME);
 	if (ifs.is_open())
@@ -532,30 +533,35 @@ void Game::loadHero()
 		system("cls");
 		for (size_t i = 0; i < tempNumHeroInList; ++i)
 		{
+			std::cout << i << " ";
 			loadHeroes[i]->printInfo();
+			std::cout << std::endl;
 		}
+		Sleep(10000);
 		std::cout << "Choose hero by number: " << std::endl;
+		std::cin >> choice;
+		hero = loadHeroes[choice]->clone();
+		hero->setX(1);
+		hero->setY(1);
 		for (size_t i = 0; i < tempNumHeroInList; ++i)
 		{
 			delete loadHeroes[i];
 		}
 		delete[] loadHeroes;
 	}
-
-
 	ifs.close();
 }
 
 void Game::saveHeroInFile()
 {
-	std::ofstream ofs(DB_FILE_NAME, std::ios::app);
+	std::fstream ofs(DB_FILE_NAME, std::ios::in|std::ios::out|std::ios::ate);
 	if (ofs.is_open())
 	{
 		numHeroInList++;
 		ofs.seekp(0, std::ios::beg);
 		ofs << numHeroInList << ' ';
 	    ofs.seekp(0, std::ios::end);
-		hero->serialize(ofs, numHeroInList);
+		hero->serialize(ofs);
 	}
 	ofs.close();
 }

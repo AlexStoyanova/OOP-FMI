@@ -16,7 +16,8 @@ public:
 	void defend(double heroAttack) override;
 	void printInfo() const override;
 	void levelUp() override;
-	void serialize(std::ofstream& ofs, size_t& numHeroInList) override;
+	void serialize(std::fstream& ofs) override;
+	Hero* clone() const override;
 
 };
 #endif

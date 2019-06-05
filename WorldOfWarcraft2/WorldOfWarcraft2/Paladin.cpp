@@ -38,10 +38,15 @@ void Paladin::printInfo() const
 	Hero::printInfo();
 }
 
-void Paladin::serialize(std::ofstream & ofs, size_t & numHeroInList)
+void Paladin::serialize(std::fstream & ofs)
 {
 	ofs << "p" << ' ';
-	Hero::serialize(ofs, numHeroInList);
+	Hero::serialize(ofs);
+}
+
+Hero * Paladin::clone() const
+{
+	return new Paladin(*this);
 }
 
 

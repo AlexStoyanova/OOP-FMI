@@ -9,23 +9,16 @@ Hero::Hero(std::ifstream & ifs) : Entity()
 	char buff[128];
 	if (ifs.is_open())
 	{
-		if (ifs.eof())
-		{
-			return;
-		}
 		ifs.getline(buff, 128, ' ');
 		if (ifs.eof())
 		{
 			return;
 		}
 		ifs >> HP >> strength >> intelligence >> level;
-		if (ifs.eof())
-		{
-			return;
-		}
 	}
-	strcpy_s(name, 128, buff);
-	memset(buff, 0, 128);
+	int len = strlen(buff);
+	name = new char[len + 1];
+	strcpy_s(name, len + 1, buff);
 }
 
 void Hero::printInfo() const
@@ -66,12 +59,22 @@ void Hero::moveRight()
 	}
 }
 
+void Hero::setX(size_t newX)
+{
+	x = newX;
+}
+
+void Hero::setY(size_t newY)
+{
+	y = newY;
+}
+
 void Hero::increaseKilledMonsters()
 {
 	killedMonsters++;
 }
 
-void Hero::serialize(std::ofstream& ofs, size_t& numHeroInList)
+void Hero::serialize(std::fstream& ofs)
 {
 	if (ofs.is_open())
 	{

@@ -43,11 +43,16 @@ void Warrior::printInfo() const
 	std::cout << "Rage: " << rage << std::endl;
 }
 
-void Warrior::serialize(std::ofstream& ofs, size_t & numHeroInList)
+void Warrior::serialize(std::fstream& ofs)
 {
 	ofs << "w" << ' ';
-	Hero::serialize(ofs, numHeroInList);
+	Hero::serialize(ofs);
 	ofs << rage << ' ';
+}
+
+Hero * Warrior::clone() const
+{
+	return new Warrior(*this);
 }
 
 

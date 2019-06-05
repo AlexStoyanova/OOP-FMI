@@ -19,11 +19,16 @@ void Mage::levelUp()
 	intelligence += (MAGE_INTELLIGENCE / 3.0);
 }
 
-void Mage::serialize(std::ofstream& ofs, size_t & numHeroInList)
+void Mage::serialize(std::fstream& ofs)
 {
 	ofs << "m" << ' ';
-	Hero::serialize(ofs, numHeroInList);
+	Hero::serialize(ofs);
 	ofs << mana << ' ';
+}
+
+Hero * Mage::clone() const
+{
+	return new Mage(*this);
 }
 
 double Mage::getAttack()

@@ -33,9 +33,13 @@ public:
 	void moveLeft();
 	void moveRight();
 
+	void setX(size_t newX);
+	void setY(size_t newY);
+
 	void increaseKilledMonsters();
 
-	virtual void serialize(std::ofstream& ofs, size_t& numHeroInList);
+	virtual void serialize(std::fstream& ofs);
+	virtual Hero* clone() const = 0;
 };
 
 #endif
